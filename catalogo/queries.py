@@ -1,4 +1,5 @@
 from __future__ import annotations
+from django.db.models import F
 
 from django.db.models import Count, Q
 
@@ -16,8 +17,8 @@ def autores_con_mas_de_n_libros(n: int):
 
 def libros_sin_disponibilidad():
     libro = Libro.objects.annotate(
-        activos=Count("prestamo", filter=Q(prestamo__fecha_devolucion__isnull=True))
-    ).filter(activos=models.F("cantidad_total"))
+        activos=Count('prestamo', filter=Q(prestamo__fecha_devolucion__isnull=True))
+    ).filter(activos=F('cantidad_total'))
     return libro
     
 
